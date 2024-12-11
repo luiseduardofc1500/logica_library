@@ -2,28 +2,11 @@ package br.com.fatecmogidascruzes.model.entity;
 
 
 
-public class Usuario {
+public abstract class Usuario implements IUsuario {
 
     private long id;
     private String email;
     private String nome;
-
-    public String getTelefone() {
-        return telefone;
-    }
-
-    public String getSenha() {
-        return senha;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public long getId() {
-        return id;
-    }
-
     private String senha;
     private String endereco;
     private String telefone;
@@ -36,6 +19,22 @@ public class Usuario {
         setTelefone(telefone);
     }
 
+    @Override
+    public String getTelefone() {
+        return telefone;
+    }
+    @Override
+
+    public String getSenha() {
+        return senha;
+    }
+    @Override
+    public String getNome() {
+        return nome;
+    }
+    public long getId() {
+        return id;
+    }
     public void setId(long id) {
         try {
             if (id < 0) {
@@ -46,6 +45,7 @@ public class Usuario {
             System.out.println(e.getMessage() + " Deve ser insirido um ID válido.");
         }
     }
+    @Override
 
     public void setNome(String nome) {
         try {
@@ -57,6 +57,7 @@ public class Usuario {
             System.out.println(e.getMessage() + " Por favor insira um nome válido.");
         }
     }
+    @Override
 
     public void setEmail(String email) {
         if (email == null || email.isEmpty()) {
@@ -64,6 +65,7 @@ public class Usuario {
         } 
        this.email = email;
     }
+    @Override
 
     public void setSenha(String senha) {
         if (senha == null || senha.isEmpty()) {
@@ -71,6 +73,7 @@ public class Usuario {
         }
         this.senha = senha;
     }
+    @Override
 
     public void setEndereco(String endereco) {
         try {
@@ -82,6 +85,7 @@ public class Usuario {
             System.out.println(e.getMessage() + " Por favor insira um endereço válido.");
         }
     }
+    @Override
 
     public void setTelefone(String telefone) {
         try {
@@ -96,10 +100,12 @@ public class Usuario {
             System.out.println(e.getMessage() + " Por favor insira um telefone válido.");
         }
     }
+    @Override
 
     public String getEmail() {
         return email;
     }
+    @Override
 
     public String getEndereco() {
         return endereco;

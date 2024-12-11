@@ -4,7 +4,7 @@ import br.com.fatecmogidascruzes.validator.LivroValidator;
 
 import java.time.LocalDate;
 
-public class Livro {
+public class Livro implements IItemInventario {
 
     private long id;
     private String isbn10;
@@ -12,6 +12,7 @@ public class Livro {
     private String titulo;
     private String idioma;
     private String autor;
+    private String descricao;
 
     public String getCategoria() {
         return categoria;
@@ -244,4 +245,16 @@ public class Livro {
             "\n }\n";
     }
 
+    @Override
+    public String getDescricao() {
+        return descricao;
+    }
+
+    @Override
+    public void setDescricao(String descricao) {
+        if (descricao == null || descricao.isEmpty()) {
+            throw new IllegalArgumentException("Descrição não pode ser vazia.");
+        }
+        this.descricao = descricao;
+    }
 }

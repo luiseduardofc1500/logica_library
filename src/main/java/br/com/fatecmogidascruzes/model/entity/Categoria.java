@@ -1,10 +1,11 @@
 package br.com.fatecmogidascruzes.model.entity;
 
 
-public class Categoria {
+public class Categoria implements IItemInventario {
 
     private long id;
 
+    @Override
     public String getDescricao() {
         return descricao;
     }
@@ -46,7 +47,7 @@ public class Categoria {
             System.out.println(e.getMessage() + " Por favor insira um nome válido.");
         }
     }
-
+    @Override
     public void setDescricao(String descricao) {
         try {
             if (descricao == null || descricao.isEmpty()) {
