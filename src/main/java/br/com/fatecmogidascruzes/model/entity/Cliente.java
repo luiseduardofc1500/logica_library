@@ -8,6 +8,8 @@ import java.time.LocalDate;
 public class Cliente extends Usuario {
 
     private String metodoPagamento;
+    private LocalDate dataCadastro;
+
 
     public LocalDate getDataCadastro() {
         return dataCadastro;
@@ -17,7 +19,6 @@ public class Cliente extends Usuario {
         return metodoPagamento;
     }
 
-    private LocalDate dataCadastro;
 
     public Cliente(String email, String nome, String senha, String endereco, String telefone,String metodoPagamento, LocalDate dataCadastro) {
         super(email, nome, senha, endereco, telefone);
@@ -25,7 +26,6 @@ public class Cliente extends Usuario {
         setDataCadastro(dataCadastro);
     }
 
-    @Override
     public void setId(long id) {
         super.setId(id);
     }
@@ -64,4 +64,6 @@ public class Cliente extends Usuario {
                 "\n  Data de Cadastro = " + dataCadastro +
                 "\n }\n";
     }
+
+
 }

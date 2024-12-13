@@ -1,17 +1,22 @@
 package br.com.fatecmogidascruzes.model.entity;
 
-
-
-public abstract class Usuario implements IUsuario {
-
-    private long id;
-    private String email;
+public class Usuario implements IUsuario {
     private String nome;
+    private String email;
     private String senha;
     private String endereco;
     private String telefone;
+    private Long id;
 
-    public Usuario(String email, String nome, String senha, String endereco, String telefone) {
+    /*@ public normal_behavior
+     @ ensures nome == nome;
+     @ ensures email == email;
+     @ ensures senha == senha;
+     @ ensures endereco == endereco;
+     @ ensures telefone == telefone;
+     @ pure
+     @*/
+    public Usuario(String nome, String email, String senha, String endereco, String telefone) {
         setNome(nome);
         setEmail(email);
         setSenha(senha);
@@ -19,95 +24,116 @@ public abstract class Usuario implements IUsuario {
         setTelefone(telefone);
     }
 
-    @Override
-    public String getTelefone() {
-        return telefone;
-    }
-    @Override
-
-    public String getSenha() {
-        return senha;
-    }
+    /*@ ensures \result != null && !\result.isEmpty(); @*/
     @Override
     public String getNome() {
         return nome;
     }
-    public long getId() {
-        return id;
-    }
-    public void setId(long id) {
-        try {
-            if (id < 0) {
-                throw new IllegalArgumentException("ID não pode ser negativo.");
-            }
-            this.id = id;
-        } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage() + " Deve ser insirido um ID válido.");
-        }
-    }
-    @Override
 
+    /*@ requires nome != null && !nome.isEmpty(); @*/
+    /*@ ensures getNome().equals(nome); @*/
+    @Override
     public void setNome(String nome) {
-        try {
-            if (nome == null || nome.isEmpty()) {
-                throw new IllegalArgumentException("Nome do usuário não pode ser vazio.");
-            }
-            this.nome = nome;
-        } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage() + " Por favor insira um nome válido.");
+        if (nome == null || nome.isEmpty()) {
+            throw new IllegalArgumentException("O nome não pode ser nulo ou vazio.");
         }
+        this.nome = nome;
     }
-    @Override
 
-    public void setEmail(String email) {
-        if (email == null || email.isEmpty()) {
-            throw new IllegalArgumentException("Email não pode ser vazio.");
-        } 
-       this.email = email;
-    }
+    /*@ ensures \result != null && !\result.isEmpty(); @*/
     @Override
-
-    public void setSenha(String senha) {
-        if (senha == null || senha.isEmpty()) {
-            throw new IllegalArgumentException("Senha não pode ser vazia.");
-        }
-        this.senha = senha;
-    }
-    @Override
-
-    public void setEndereco(String endereco) {
-        try {
-            if (endereco == null || endereco.isEmpty()) {
-                throw new IllegalArgumentException("Endereco não pode ser vazio.");
-            }
-            this.endereco = endereco;
-        } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage() + " Por favor insira um endereço válido.");
-        }
-    }
-    @Override
-
-    public void setTelefone(String telefone) {
-        try {
-            if (telefone == null || telefone.isEmpty()) {
-                throw new IllegalArgumentException("Telefone não pode ser vazio.");
-            }
-            if (telefone.length() != 11) {
-                throw new IllegalArgumentException("Telefone inválido.");
-            }
-            this.telefone = telefone;
-        } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage() + " Por favor insira um telefone válido.");
-        }
-    }
-    @Override
-
     public String getEmail() {
         return email;
     }
-    @Override
 
+    /*@ requires email != null && !email.isEmpty(); @*/
+    /*@ ensures getEmail().equals(email); @*/
+    @Override
+    public void setEmail(String email) {
+        if (email == null || email.isEmpty()) {
+            throw new IllegalArgumentException("O email não pode ser nulo ou vazio.");
+        }
+        this.email = email;
+    }
+
+    /*@ ensures \result != null && !\result.isEmpty(); @*/
+    @Override
+    public String getSenha() {
+        return senha;
+    }
+
+    /*@ requires senha != null && senha.length() >= 8
+      @ && (\exists int i; 0 <= i < senha.length(); Character.isUpperCase(senha.charAt(i)))
+      @ && (\exists int i; 0 <= i < senha.length(); !Character.isLetterOrDigit(senha.charAt(i))); @*/
+    /*@ ensures getSenha().equals(senha); @*/
+    @Override
+    public void setSenha(String senha) {
+        if (senha == null || senha.isEmpty()) {
+            throw new IllegalArgumentException("A senha não pode ser nula ou vazia.");
+        }
+        if (senha.length() < 8) {
+            throw new IllegalArgumentException("A senha deve ter pelo menos 8 caracteres.");
+        }
+        if (senha.chars().noneMatch(Character::isUpperCase)) {
+            throw new IllegalArgumentException("A senha deve conter pelo menos uma letra maiúscula.");
+        }
+        if (senha.chars().noneMatch(ch -> !Character.isLetterOrDigit(ch))) {
+            throw new IllegalArgumentException("A senha deve conter pelo menos um caractere especial.");
+        }
+        this.senha = senha;
+    }
+
+    /*@ ensures \result != null && !\result.isEmpty(); @*/
+    @Override
     public String getEndereco() {
         return endereco;
+    }
+
+    /*@ requires endereco != null && !endereco.isEmpty(); @*/
+    /*@ ensures getEndereco().equals(endereco); @*/
+    @Override
+    public void setEndereco(String endereco) {
+        if (endereco == null || endereco.isEmpty()) {
+            throw new IllegalArgumentException("O endereço não pode ser nulo ou vazio.");
+        }
+        this.endereco = endereco;
+    }
+
+    /*@ ensures \result != null && !\result.isEmpty(); @*/
+    @Override
+    public String getTelefone() {
+        return telefone;
+    }
+
+    /*@ requires telefone != null && !telefone.isEmpty(); @*/
+    /*@ ensures getTelefone().equals(telefone); @*/
+    @Override
+    public void setTelefone(String telefone) {
+        if (telefone == null || telefone.isEmpty()) {
+            throw new IllegalArgumentException("O telefone não pode ser nulo ou vazio.");
+        }
+        this.telefone = telefone;
+    }
+
+
+    /*@
+   @ requires id != null;
+   @ requires id >= 0;
+   @ ensures this.id == id;
+   @*/
+    public void setId(Long id) {
+        if (id == null || id < 0) {
+            throw new IllegalArgumentException("O ID não pode ser nulo ou negativo.");
+        }
+        this.id = id;
+    }
+
+    /*@
+      @ ensures \result != null;
+      @ ensures \result >= 0;
+      @ ensures \result == this.id;
+      @*/
+    public Long getId() {
+        return id;
     }
 }

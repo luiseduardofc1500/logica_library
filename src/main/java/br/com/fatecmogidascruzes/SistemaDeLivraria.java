@@ -41,15 +41,15 @@ public class SistemaDeLivraria {
 
         // Testando adicionar funcionarios
         System.out.println("\n---- ADICIONANDO FUNCIONARIOS ---");
-        funcionarioService.adicionarFuncionario(new Funcionario("ana@email.com", "Ana", "Senha123", "Endereço da Ana", "12934567890", "Cargo da Ana", LocalDate.now()));
-        funcionarioService.adicionarFuncionario(new Funcionario("ana@email.com", "Antony", "Senha321", "Endereço do Antony", "12934567890", "Cargo do Antony", LocalDate.now()));
+        funcionarioService.adicionarFuncionario(new Funcionario("ana@email.com", "Ana", "Senha$1sdsd23", "Endereço da Ana", "12934567890", "Cargo da Ana", LocalDate.now()));
+        funcionarioService.adicionarFuncionario(new Funcionario("ana@email.com", "Antony", "Senha$32dsds1", "Endereço do Antony", "12934567890", "Cargo do Antony", LocalDate.now()));
         System.out.println(FuncionarioRepository.findAll());
 
         // Testando adicionar clientes
         System.out.println("\n---- ADICIONANDO CLIENTES ---");
-        clienteService.adicionarCliente(new Cliente("antony@email.com", "Romulo", "dwieifds", "romolandia", "11988521035", "moedinhas de 1 centavo", LocalDate.now()));
-        clienteService.adicionarCliente(new Cliente("antony@email.com", "Caio", "123456", "Palavraonao", "1198844555", "moedinhas de 1 centavo", LocalDate.now()));
-        clienteService.adicionarCliente(new Cliente("l@e.com", "leo", "123", "Palavraonao", "1198844555", "moedinhas de 1 centavo", LocalDate.now()));
+        clienteService.adicionarCliente(new Cliente("antony@email.com", "Romulo", "dwieidsds#Lfds", "romolandia", "11988521035", "moedinhas de 1 centavo", LocalDate.now()));
+        clienteService.adicionarCliente(new Cliente("antony@email.com", "Caio", "123$4Ldsd56", "Palavraonao", "1198844555", "moedinhas de 1 centavo", LocalDate.now()));
+        clienteService.adicionarCliente(new Cliente("l@e.com", "leo", "1dsdsdsdsdsdL2#3", "Paldsdavra$onao", "1198844555", "moedinhas de 1 centavo", LocalDate.now()));
         System.out.println(ClienteRepository.findAll());
 
         // Testando adicionar categorias
@@ -82,15 +82,15 @@ public class SistemaDeLivraria {
 
         System.out.println("\n---- ATUALIZANDO FUNCIONÁRIO ---" );
         System.out.println(FuncionarioRepository.findById(1));
-        funcionarioService.atualizarFuncionario(1,new Funcionario("ana@email.com", "ANA PAULA","Paulao123", "Endereço da Ana", "12934567890", "Cargo da Ana", LocalDate.now()));
+        funcionarioService.atualizarFuncionario(1,new Funcionario("ana@email.com", "ANA PAULA","Paulao%123", "Endereço da Ana", "12934567890", "Cargo da Ana", LocalDate.now()));
         System.out.println(FuncionarioRepository.findById(1));
 
-        clienteService.adicionarCliente(new Cliente("romulo@romail.com", "Romulo", "123", "Eunaoquero", "11988521035", "moedinhas de 1 centavo", LocalDate.now()));
+        clienteService.adicionarCliente(new Cliente("romulo@romail.com", "Romulo", "12%assasaL3", "Eunaoquero", "11988521035", "moedinhas de 1 centavo", LocalDate.now()));
         System.out.println(ClienteRepository.findAll());
 
         System.out.println("\n---- ATUALIZAR CLIENTE ---" );
         System.out.println(ClienteRepository.findById(1));
-        clienteService.atualizarCliente(1,new Cliente("antony@email.com", "Romulo da silva", "Silvaromulo", "Romulandia", "11988521035", "moedinhas de 1 centavo", LocalDate.now()));
+        clienteService.atualizarCliente(1,new Cliente("antony@email.com", "Romulo da silva", "Silvaro%1mulo", "Romulandia", "11988521035", "moedinhas de 1 centavo", LocalDate.now()));
         System.out.println(ClienteRepository.findById(1));
 
         System.out.println("\n---- ATUALIZAR CATEGORIA ---" );
@@ -187,7 +187,7 @@ public class SistemaDeLivraria {
         categoriaService.excluirCategoria(2);
 
         //******************************************
-        funcionarioService.adicionarFuncionario(new Funcionario("ana@email.com","Ana","Senha123", "Endereço da Ana", "12934567890", "Cargo da Ana", LocalDate.now()));
+        funcionarioService.adicionarFuncionario(new Funcionario("ana@email.com","Ana","Senha%dsds123", "Endereço da Ana", "12934567890", "Cargo da Ana", LocalDate.now()));
 
         //TESTES MENUS
         System.out.println("\n\n\n**---- MENUS ---**");
