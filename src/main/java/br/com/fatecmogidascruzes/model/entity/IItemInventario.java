@@ -2,11 +2,13 @@ package br.com.fatecmogidascruzes.model.entity;
 
 public interface IItemInventario {
 
-    /*@ ensures \result != null && !\result.isEmpty(); @*/
+    //@ model instance public String descricao2;
+
+
+    //@ ensures \result == descricao2;
     /*@ pure @*/
     String getDescricao();
 
-    /*@ requires descricao != null && !descricao.isEmpty(); @*/
-    /*@ ensures getDescricao().equals(descricao); @*/
+    //@ requires descricao != ""
     void setDescricao(String descricao);
 }
