@@ -13,6 +13,12 @@ public class Livro implements IItemInventario {
     private String idioma;
     private String autor;
     private String descricao;
+    private int estoque;
+    private String editora;
+    private int numeroDePaginas;
+    private LocalDate dataDePublicacao;
+    private double preco;
+    private String categoria;
 
     public String getCategoria() {
         return categoria;
@@ -62,12 +68,6 @@ public class Livro implements IItemInventario {
         return id;
     }
 
-    private int estoque;
-    private String editora;
-    private int numeroDePaginas;
-    private LocalDate dataDePublicacao;
-    private double preco;
-    private String categoria;
 
     public Livro(String isbn10, String isbn13, String titulo, String idioma, String autor, int estoque, String editora, int numeroDePaginas, LocalDate dataDePublicacao, double preco, String categoria) { 
         setIsbn10(isbn10);
