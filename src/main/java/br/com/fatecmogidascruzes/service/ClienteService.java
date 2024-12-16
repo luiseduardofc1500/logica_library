@@ -5,6 +5,8 @@ import java.util.List;
 
 public interface ClienteService {
 
+    //@param cliente
+    //@requires cliente!=null
     void adicionarCliente(Cliente cliente);
 
     void atualizarCliente(int id, Cliente cliente);
