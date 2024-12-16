@@ -3,7 +3,7 @@ package br.com.fatecmogidascruzes.model.entity;
 
 public class Categoria implements IItemInventario {
 
-    private long id;
+    private int id;
 
     @Override
     public String getDescricao() {
@@ -14,7 +14,7 @@ public class Categoria implements IItemInventario {
         return nome;
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
@@ -26,7 +26,7 @@ public class Categoria implements IItemInventario {
         setDescricao(descricao);
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         try {
             if (id < 0) {
                 throw new IllegalArgumentException("ID não pode ser negativo.");

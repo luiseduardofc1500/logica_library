@@ -7,14 +7,14 @@ import java.util.List;
 public class CategoriaRepository {
 
     private static final List<Categoria> categorias = new ArrayList<>();
-    private static long ultimoId = 0;
+    private static int ultimoId = 0;
 
     public static void save(Categoria categoria) {
         categoria.setId(++ultimoId);
         categorias.add(categoria);
     }
 
-    public static void atualizarCategoria(long id, Categoria categoria) {
+    public static void atualizarCategoria(int id, Categoria categoria) {
         int index = findIndexPorId(id);
         if (index != -1) {
             categoria.setId(id);

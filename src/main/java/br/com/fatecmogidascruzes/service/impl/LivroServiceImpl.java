@@ -16,7 +16,7 @@ public class LivroServiceImpl implements LivroService {
     }
 
     @Override
-    public void atualizarLivro(long id, Livro livro) {
+    public void atualizarLivro(int id, Livro livro) {
         try {
             LivroRepository.atualizarLivro(id, livro);
             System.out.println("Livro " + livro.getTitulo() + " atualizado com sucesso!");
@@ -26,7 +26,7 @@ public class LivroServiceImpl implements LivroService {
     }
     
     @Override
-    public void excluirLivroPorId(long id) {
+    public void excluirLivroPorId(int id) {
         try {
             Livro livro = LivroRepository.findById(id);
             LivroRepository.removerLivro(livro);
@@ -71,7 +71,7 @@ public class LivroServiceImpl implements LivroService {
 				livrosEncontrados = LivroRepository.findAllWhereExistEstoque();
 				break;
 			case 2:
-				livrosEncontrados.add(LivroRepository.findById(Long.parseLong(valorBuscar)));
+				livrosEncontrados.add(LivroRepository.findById(Integer. parseInt(valorBuscar)));
 				break;
 			case 3:
 				livrosEncontrados = LivroRepository.findByTituloLista(valorBuscar);

@@ -11,7 +11,7 @@ public class CategoriaServiceImpl implements CategoriaService {
         System.out.println("Categoria " + categoria.getNome() + " adicionada com sucesso!");
     }
 
-    public void atualizarCategoria(long id, Categoria categoria) {
+    public void atualizarCategoria(int id, Categoria categoria) {
         try {
             CategoriaRepository.atualizarCategoria(id, categoria);
             System.out.println("Categoria " + categoria.getNome() + " atualizado com sucesso!");

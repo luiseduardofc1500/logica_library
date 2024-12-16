@@ -6,7 +6,7 @@ import java.time.LocalDate;
 
 public class Livro implements IItemInventario {
 
-    private long id;
+    private int id;
     private String isbn10;
     private String isbn13;
     private String titulo;
@@ -58,7 +58,7 @@ public class Livro implements IItemInventario {
         return isbn10;
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
@@ -83,7 +83,7 @@ public class Livro implements IItemInventario {
         setCategoria(categoria);
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         try {
             if (id < 0) {
                 throw new IllegalArgumentException("ID não pode ser negativo.");

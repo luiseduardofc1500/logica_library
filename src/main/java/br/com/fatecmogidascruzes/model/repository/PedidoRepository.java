@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 public class PedidoRepository {
 
     private static final List<Pedido> pedidos = new ArrayList<>();
-    private static long ultimoId = 0;
+    private static int ultimoId = 0;
 
     public static void save(Pedido pedido){
             pedido.setId(++ultimoId);

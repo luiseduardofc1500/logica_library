@@ -9,14 +9,14 @@ import java.util.stream.Collectors;
 public class LivroRepository {
 	
 	private static final List<Livro> livros = new ArrayList<>();
-	private static long ultimoId = 0;
+	private static int ultimoId = 0;
 
 	public static void save(Livro livro) {
 		livro.setId(++ultimoId);
 		livros.add(livro);
 	}
 
-	public static void atualizarLivro(long id, Livro livro) {
+	public static void atualizarLivro(int id, Livro livro) {
 		int index = findIndexPorId(id);
 		if (index != -1) {
 			livro.setId(id);
@@ -37,7 +37,7 @@ public class LivroRepository {
 		return livros;
 	}
 
-	private static int findIndexPorId(long id) {
+	private static int findIndexPorId(int id) {
 		return livros.stream()
 				.filter(livro -> livro.getId() == id)
 				.findFirst()
@@ -45,7 +45,7 @@ public class LivroRepository {
 				.orElse(-1);
 	}
 
-	public static Livro findById(long id) {
+	public static Livro findById(int id) {
 		return livros.stream()
 				.filter(livro -> livro.getId() == id)
 				.findFirst()
