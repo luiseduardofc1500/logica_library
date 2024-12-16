@@ -27,7 +27,7 @@ public class FuncionarioServiceImpl implements FuncionarioService {
     }
     
     @Override
-    public void atualizarFuncionario(long id, Funcionario funcionario) {
+    public void atualizarFuncionario(int id, Funcionario funcionario) {
         try {
             FuncionarioRepository.alterarFuncionario(id, funcionario);
             System.out.println("Funcionario " + funcionario.getNome() + " atualizado com sucesso!");

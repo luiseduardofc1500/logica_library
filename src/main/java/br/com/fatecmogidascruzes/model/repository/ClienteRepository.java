@@ -10,14 +10,14 @@ import java.util.stream.Collectors;
 public class ClienteRepository {
 
     private static final List<Cliente> clientes = new ArrayList<>();
-    private static long ultimoId = 0;
+    private static int ultimoId = 0;
 
     public static void save(Cliente cliente) {
         cliente.setId(++ultimoId);
         clientes.add(cliente);
     }
    
-    public static void atualizarCliente(long id, Cliente cliente) {
+    public static void atualizarCliente(int id, Cliente cliente) {
         int index = findIndexPorId(id);
         if (index != -1) {
             cliente.setId(id);
@@ -28,7 +28,7 @@ public class ClienteRepository {
         }
     }
 
-    public static void removerCliente(long id) {
+    public static void removerCliente(int id) {
         Cliente cliente = findById(id);
         if (cliente != null) {
             clientes.remove(cliente);
@@ -40,7 +40,7 @@ public class ClienteRepository {
         return clientes;
     }
 
-    private static int findIndexPorId(long id) {
+    private static int findIndexPorId(int id) {
         return clientes.stream()
                 .filter(cliente -> cliente.getId() == id)
                 .findFirst()
@@ -48,7 +48,7 @@ public class ClienteRepository {
                 .orElse(-1);
     }
 
-    public static Cliente findById(long id) {
+    public static Cliente findById(int id) {
         return clientes.stream()
                 .filter(cliente -> cliente.getId() == id)
                 .findFirst().orElse(null);

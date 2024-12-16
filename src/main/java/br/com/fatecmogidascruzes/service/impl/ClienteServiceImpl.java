@@ -27,7 +27,7 @@ public class ClienteServiceImpl implements ClienteService {
     }
 
     @Override
-    public void atualizarCliente(long id, Cliente cliente) {
+    public void atualizarCliente(int id, Cliente cliente) {
         try {
             ClienteRepository.atualizarCliente(id, cliente);
             System.out.println("Cliente " + cliente.getNome() + " atualizado com sucesso!");

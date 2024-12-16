@@ -10,14 +10,14 @@ import java.util.stream.Collectors;
 public class FuncionarioRepository {
 
     private static final List<Funcionario> funcionarios = new ArrayList<>();
-    private static long ultimoId = 0;
+    private static int ultimoId = 0;
 
     public static void save(Funcionario funcionario) {
         funcionario.setId(++ultimoId);
         funcionarios.add(funcionario);
     }
 
-    public static void alterarFuncionario(long id, Funcionario funcionario) {
+    public static void alterarFuncionario(int id, Funcionario funcionario) {
         int index = findIndexPorId(id);
         if (index != -1) {
             funcionario.setId(id);
@@ -28,7 +28,7 @@ public class FuncionarioRepository {
         }
     }
 
-    public static void removerFuncionario(long id) {
+    public static void removerFuncionario(int id) {
         Funcionario funcionario = findById(id);
         if (funcionario != null) {
             funcionarios.remove(funcionario);
@@ -40,7 +40,7 @@ public class FuncionarioRepository {
         return funcionarios;
     }
 
-    public static int findIndexPorId(long id) {
+    public static int findIndexPorId(int id) {
         return funcionarios.stream()
                 .filter(funcionario -> funcionario.getId() == id)
                 .findFirst()
@@ -48,7 +48,7 @@ public class FuncionarioRepository {
                 .orElse(-1);
     }
     
-    public static Funcionario findById(long id) {
+    public static Funcionario findById(int id) {
         return funcionarios.stream()
                 .filter(funcionario -> funcionario.getId() == id)
                 .findFirst().orElse(null);

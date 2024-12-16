@@ -26,7 +26,7 @@ public class Cliente extends Usuario {
         setDataCadastro(dataCadastro);
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         super.setId(id);
     }
 
