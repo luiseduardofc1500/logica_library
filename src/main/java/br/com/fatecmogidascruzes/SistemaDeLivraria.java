@@ -42,14 +42,14 @@ public class SistemaDeLivraria {
         // Testando adicionar funcionarios
         System.out.println("\n---- ADICIONANDO FUNCIONARIOS ---");
         funcionarioService.adicionarFuncionario(new Funcionario("ana@email.com", "Ana", "Senha$1sdsd23", "Endereço da Ana", "12934567890", "Cargo da Ana", LocalDate.now()));
-        funcionarioService.adicionarFuncionario(new Funcionario("ana@email.com", "Antony", "Senha$32dsds1", "Endereço do Antony", "12934567890", "Cargo do Antony", LocalDate.now()));
+        funcionarioService.adicionarFuncionario(new Funcionario("antony@email.com", "Antony", "Senha$32dsds1", "Endereço do Antony", "12934567890", "Cargo do Antony", LocalDate.now()));
         System.out.println(FuncionarioRepository.findAll());
 
         // Testando adicionar clientes
         System.out.println("\n---- ADICIONANDO CLIENTES ---");
-        clienteService.adicionarCliente(new Cliente("antony@email.com", "Romulo", "dwieidsds#Lfds", "romolandia", "11988521035", "moedinhas de 1 centavo", LocalDate.now()));
-        clienteService.adicionarCliente(new Cliente("antony@email.com", "Caio", "123$4Ldsd56", "Palavraonao", "1198844555", "moedinhas de 1 centavo", LocalDate.now()));
-        clienteService.adicionarCliente(new Cliente("l@e.com", "leo", "1dsdsdsdsdsdL2#3", "Paldsdavra$onao", "1198844555", "moedinhas de 1 centavo", LocalDate.now()));
+        clienteService.adicionarCliente(new Cliente("antony@email.com", "Romulo", "dwieidsds#Lfds", "romolandia", "11988521035", "moedinhas de 1 centavo"));
+        clienteService.adicionarCliente(new Cliente("antony@email.com", "Caio", "123$4Ldsd56", "Palavraonao", "1198844555", "moedinhas de 1 centavo"));
+        clienteService.adicionarCliente(new Cliente("l@e.com", "leo", "1dsdsdsdsdsdL2#3", "Paldsdavra$onao", "1198844555", "moedinhas de 1 centavo"));
         System.out.println(ClienteRepository.findAll());
 
         // Testando adicionar categorias
@@ -72,77 +72,25 @@ public class SistemaDeLivraria {
 
         //testando atualizar livros
         System.out.println("\n---- ATUALIZANDO LIVROS ---" );
-        System.out.println(LivroRepository.findById(1));
-        //testando atualizar livro erro
-        livroService.atualizarLivro(1, new Livro("0123456789", "", "Biblia", "Portugues", "profeta", -1, "Reino do Ceus", 1000, dataDePublicacao, 300.00, "Religiao"));
-        System.out.println(LivroRepository.findById(1));
-        System.out.println(LivroRepository.findAllWhereExistEstoque());
-        //testando atualizar livro correto
-        livroService.atualizarLivro(1, new Livro("0123456789", "", "Biblia", "Portugues", "profeta", 0, "Reino do Ceus", 1000, dataDePublicacao, 300.00, "Religiao"));
+        Livro livroExistente = LivroRepository.findById(1);
+        if (livroExistente != null) {
+            livroService.atualizarLivro(livroExistente.getId(), new Livro("0123456789", "", "Biblia", "Portugues", "profeta", 0, "Reino do Ceus", 1000, dataDePublicacao, 300.00, "Religiao"));
+        } else {
+            System.out.println("Livro não encontrado para atualização.");
+        }
 
+        //testando atualizar funcionário
         System.out.println("\n---- ATUALIZANDO FUNCIONÁRIO ---" );
-        System.out.println(FuncionarioRepository.findById(1));
-        funcionarioService.atualizarFuncionario(1,new Funcionario("ana@email.com", "ANA PAULA","Paulao%123", "Endereço da Ana", "12934567890", "Cargo da Ana", LocalDate.now()));
-        System.out.println(FuncionarioRepository.findById(1));
+        funcionarioService.atualizarFuncionario("leo123@gmail.com", new Funcionario("ana@email.com", "ANA PAULA", "Paulao%123", "Endereço da Ana", "12934567890", "Cargo da Ana", LocalDate.now()));
 
-        clienteService.adicionarCliente(new Cliente("romulo@romail.com", "Romulo", "12%assasaL3", "Eunaoquero", "11988521035", "moedinhas de 1 centavo", LocalDate.now()));
-        System.out.println(ClienteRepository.findAll());
-
+        // Testando atualizar cliente
         System.out.println("\n---- ATUALIZAR CLIENTE ---" );
-        System.out.println(ClienteRepository.findById(1));
-        clienteService.atualizarCliente(1,new Cliente("antony@email.com", "Romulo da silva", "Silvaro%1mulo", "Romulandia", "11988521035", "moedinhas de 1 centavo", LocalDate.now()));
-        System.out.println(ClienteRepository.findById(1));
+        clienteService.atualizarCliente("leo123@gmail.com", new Cliente("antony@email.com", "Romulo da silva", "Silvaro%1mulo", "Romulandia", "11988521035", "moedinhas de 1 centavo"));
 
+        // Testando atualizar categoria
         System.out.println("\n---- ATUALIZAR CATEGORIA ---" );
-        categoriaService.atualizarCategoria(1,new Categoria("Romance de Época" , "Livros de Romance e Fanfics de época."));
+        categoriaService.atualizarCategoria(1, new Categoria("Romance de Época", "Livros de Romance e Fanfics de época."));
         System.out.println(CategoriaRepository.findAllCategorias());
-        categoriaService.atualizarCategoria(1,new Categoria("Romance" , "Livros de Romance e Fanfics de época."));
-        System.out.println(CategoriaRepository.findAllCategorias());
-
-        //******************************************
-
-        //TESTES DE BUSCAR ENTIDADES
-        System.out.println("\n**---- BUSCAR ---**");
-
-        // Testando a busca de livros
-        System.out.println("\n---- BUSCAR LIVROS ---" );
-        System.out.println(LivroRepository.findAllWhereExistEstoque());
-        System.out.println(livroService.buscarLivro(7,"Romance"));
-        System.out.println(livroService.buscarLivro(8, "150.00"));
-        System.out.println(livroService.buscarLivro(9, "5"));
-
-        //data para string
-        String data = LocalDate.now().toString();
-
-        // Testando a busca de funcionario
-        System.out.println("\n---- BUSCAR FUNCIONARIOS ---" );
-        System.out.println(funcionarioService.buscarFuncionario(3, "Ana"));
-        System.out.println(funcionarioService.buscarFuncionario(4, "ana@email.com"));
-        System.out.println(funcionarioService.buscarFuncionario(3, "Antonythony"));
-        System.out.println(funcionarioService.buscarFuncionario(5, "Cargo da Ana"));
-        System.out.println(funcionarioService.buscarFuncionario(6, data));
-
-        // Testando a busca de cliente
-        System.out.println("\n---- BUSCAR CLIENTES ---" );
-        System.out.println(clienteService.buscarCliente(3, "Romulo"));
-        System.out.println(clienteService.buscarCliente(4, "romulo@romail.com"));
-        System.out.println(funcionarioService.buscarFuncionario(3, "Romulandia"));
-        System.out.println(clienteService.buscarCliente(5, "moedinhas de 1 centavo"));
-        System.out.println(clienteService.buscarCliente(6, data));
-        
-        // Testando a busca de categoria
-        System.out.println("\n---- BUSCAR CATEGORIA---");
-        System.out.println("\nbuscando cateogira romance...");
-        System.out.println(categoriaService.buscarCategoriaPorNome("Romance"));
-        System.out.println("\n\nbuscando cateogira ficcao (inexistente)...");
-        System.out.println(categoriaService.buscarCategoriaPorNome("Ficção"));
-
-        // Testando a busca de pedido
-        System.out.println("\n---- BUSCAR PEDIDO ---" );
-        System.out.println(pedidoService.buscarPedido(1, "1"));
-        System.out.println(pedidoService.buscarPedido(2, "leo123@gmail.com"));
-        System.out.println(pedidoService.buscarPedido(3, "Harry Potter"));
-        System.out.println(pedidoService.buscarPedido(4, "1"));
 
         //******************************************
 
@@ -151,43 +99,30 @@ public class SistemaDeLivraria {
 
         //testando excluir livros
         System.out.println("\n---- EXCLUIR LIVROS ---" );
-        LocalDate dataDePublicacao4 = LocalDate.of(2023, 8, 15);
-        livroService.adicionarLivro(new Livro("6584956245", "9786584956247", "O Pequeno Principe", "Portugues", "Antoine de Saint-Exupery", 5, "Editora Garnier", 96, dataDePublicacao4, 19.90, "Acao e Aventura"));
-        System.out.println("Tentando excluir livro com ID 1:");
-        livroService.excluirLivroPorId(1);
-        System.out.println("Tentando excluir livro com ISBN-10 0306406152:");
-        livroService.excluirLivroPorIsbn10("0306406152");
-        System.out.println("Tentando excluir livro com ISBN-13 9786584956247:");
-        livroService.excluirLivroPorIsbn13("9786584956247");
-        System.out.println("Tentando excluir livro com ID 6 (inexistente):");
-        livroService.excluirLivroPorId(6);
+        livroService.excluirLivroPorId(1); // Excluir livro com ID 1
+        livroService.excluirLivroPorIsbn10("0306406152"); // Excluir livro com ISBN-10
+        livroService.excluirLivroPorIsbn13("9786584956247"); // Excluir livro com ISBN-13
         System.out.println(LivroRepository.findAllWhereExistEstoque());
 
         // Testando a exclusão de pedido
         System.out.println("\n---- EXCLUIR FUNCIONARIO ---" );
-        System.out.println("Tentando excluir a funcionaria Ana com ID 1");
-        funcionarioService.excluirFuncionario(1);
-        System.out.println("Tentando excluir funcionario com ID 2 (inexistente)");
-        funcionarioService.excluirFuncionario(2);
+        funcionarioService.excluirFuncionario("leo123@gmail.com"); // Excluir funcionario com ID 1
         System.out.println(FuncionarioRepository.findAll());
 
         // Testando a exclusão de cliente
         System.out.println("\n---- EXCLUIR CLIENTE ---" );
-        System.out.println("Tentando excluir o cliente Romulo com ID 1");
-        clienteService.excluirCliente(1);
-        System.out.println("Tentando excluir o cliente com ID 4(inexistente)");
-        clienteService.excluirCliente(4);
+        clienteService.excluirCliente("leo123@gmail.com"); // Excluir cliente com ID 1
         System.out.println(ClienteRepository.findAll());
 
         // Testando a exclusão de categoria
         System.out.println("\n---- EXCLUIR CATEGORIA ---" );
-        categoriaService.excluirCategoria(1);
+        categoriaService.excluirCategoria(1); // Excluir categoria com ID 1
         System.out.println(CategoriaRepository.findAllCategorias());
-        System.out.println("\n tentando excluir categoria com ID 2 (inexistente)");
-        categoriaService.excluirCategoria(2);
 
         //******************************************
-        funcionarioService.adicionarFuncionario(new Funcionario("ana@email.com","Ana","Senha%dsds123", "Endereço da Ana", "12934567890", "Cargo da Ana", LocalDate.now()));
+
+        // Adicionar novo funcionário para continuar testes
+        funcionarioService.adicionarFuncionario(new Funcionario("ana@email.com", "Ana", "Senha%dsds123", "Endereço da Ana", "12934567890", "Cargo da Ana", LocalDate.now()));
 
         //TESTES MENUS
         System.out.println("\n\n\n**---- MENUS ---**");

@@ -7,7 +7,6 @@ public interface IUsuario {
     //@ model instance public String senha2;
     //@ model instance public String endereco2;
     //@ model instance public String telefone2;
-    //@ model instance public int id2;
 
 
     //@ ensures \result == nome2;
@@ -40,9 +39,5 @@ public interface IUsuario {
     //@ requires telefone2 != "";
     void setTelefone(String telefone);
 
-    //@ ensures \result == id2;
-    int getId();
 
-    //@ requires id2 >= 0;
-    void setId(int id);
 }

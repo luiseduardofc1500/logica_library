@@ -15,6 +15,10 @@ public class Funcionario extends Usuario {
     }
 
     private LocalDate dataContratacao;
+    //@ spec_public
+    private int id;
+    //@ spec_public
+    private static int count = 0;
 
     public Funcionario(String email, String nome, String senha, String endereco, String telefone, String cargo, LocalDate dataContratacao) {
         super(email, nome, senha, endereco, telefone);
@@ -41,6 +45,18 @@ public class Funcionario extends Usuario {
             this.dataContratacao = dataContratacao;
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage() + " Por favor insira uma data de contratação para o funcionário.");
+        }
+    }
+
+    //@ ensures \result == id;
+    public int getId() {
+        return this.id;
+    }
+
+    //@ requires id >= 0;
+    public void setId(int id) {
+        if (id>=0){
+            this.id = id;
         }
     }
 

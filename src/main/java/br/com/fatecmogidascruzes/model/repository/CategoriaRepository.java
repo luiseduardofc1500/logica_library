@@ -10,11 +10,11 @@ public class CategoriaRepository {
     private static long ultimoId = 0;
 
     public static void save(Categoria categoria) {
-        categoria.setId(++ultimoId);
+        categoria.setId((int) ++ultimoId);
         categorias.add(categoria);
     }
 
-    public static void atualizarCategoria(long id, Categoria categoria) {
+    public static void atualizarCategoria(int id, Categoria categoria) {
         int index = findIndexPorId(id);
         if (index != -1) {
             categoria.setId(id);

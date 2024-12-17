@@ -2,80 +2,91 @@ package br.com.fatecmogidascruzes.model.repository;
 
 import br.com.fatecmogidascruzes.model.entity.Cliente;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class ClienteRepository {
 
+    /*@
+      @ public invariant clientes != null;
+      @ public invariant (\forall int i; 0 <= i && i < clientes.size(); clientes.get(i) != null);
+      @*/
     private static final List<Cliente> clientes = new ArrayList<>();
-    private static long ultimoId = 0;
 
+    /*@
+      @ requires cliente != null;
+      @ requires cliente.getEmail() != null;
+      @ requires findByEmail(cliente.getEmail()) == null;
+      @ ensures clientes.contains(cliente);
+      @ also
+      @ signals (IllegalArgumentException e) findByEmail(cliente.getEmail()) != null;
+      @*/
     public static void save(Cliente cliente) {
-        cliente.setId(++ultimoId);
-        clientes.add(cliente);
-    }
-   
-    public static void atualizarCliente(long id, Cliente cliente) {
-        int index = findIndexPorId(id);
-        if (index != -1) {
-            cliente.setId(id);
-            clientes.set(index, cliente);
-        }
-        else{
-            throw new IllegalArgumentException("Ocorreu algo de errado ao atualizar informações do cliente, por favor verifique as informações e tente novamente");
+        Cliente clienteExistente = findByEmail(cliente.getEmail());
+        if (clienteExistente == null) {
+            clientes.add(cliente);
+        } else {
+            throw new IllegalArgumentException("Cliente com o email já existe.");
         }
     }
 
-    public static void removerCliente(long id) {
-        Cliente cliente = findById(id);
-        if (cliente != null) {
+    /*@
+      @ requires email != null;
+      @ requires clienteAtualizado != null;
+      @ requires findByEmail(email) != null;
+      @ ensures (\forall Cliente c; c != findByEmail(email) ==> \old(clientes).contains(c) ==> clientes.contains(c));
+      @ ensures findByEmail(email).getNome().equals(clienteAtualizado.getNome());
+      @ ensures findByEmail(email).getMetodoPagamento().equals(clienteAtualizado.getMetodoPagamento());
+      @ ensures findByEmail(email).getDataCadastro().equals(clienteAtualizado.getDataCadastro());
+      @ also
+      @ signals (IllegalArgumentException e) findByEmail(email) == null;
+      @*/
+    public static void atualizarCliente(String email, Cliente clienteAtualizado) {
+        Cliente clienteExistente = findByEmail(email);
+        if (clienteExistente != null) {
+            clienteExistente.setNome(clienteAtualizado.getNome());
+            clienteExistente.setMetodoPagamento(clienteAtualizado.getMetodoPagamento());
+        } else {
+            throw new IllegalArgumentException("Cliente com email não encontrado.");
+        }
+    }
+
+    /*@
+      @ requires cliente != null;
+      @ requires clientes.contains(cliente);
+      @
+      @ ensures !clientes.contains(cliente);
+      @
+      @ also
+      @ signals (IllegalArgumentException e) !\old(clientes).contains(cliente);
+      @*/
+    public static void removerCliente(Cliente cliente) {
+        if (clientes.contains(cliente)) {
             clientes.remove(cliente);
-        } else 
+        } else {
             throw new IllegalArgumentException("Cliente não encontrado.");
+        }
     }
 
+    /*@
+      @ ensures \result != null;
+      @ ensures \result.size() == clientes.size();
+      @ ensures (\forall int i; 0 <= i && i < \result.size(); \result.get(i) == clientes.get(i));
+      @*/
     public static List<Cliente> findAll() {
-        return clientes;
+        return new ArrayList<>(clientes);
     }
 
-    private static int findIndexPorId(long id) {
-        return clientes.stream()
-                .filter(cliente -> cliente.getId() == id)
-                .findFirst()
-                .map(clientes::indexOf)
-                .orElse(-1);
-    }
-
-    public static Cliente findById(long id) {
-        return clientes.stream()
-                .filter(cliente -> cliente.getId() == id)
-                .findFirst().orElse(null);
-    }
-
-    public static List<Cliente> findByNome(String nome) {
-        return clientes.stream()
-                .filter(cliente -> cliente.getNome().toUpperCase().contains(nome.toUpperCase()))
-                .collect(Collectors.toList());
-    }
-
+    /*@
+      @ requires email != null;
+      @ ensures (\exists Cliente c; clientes.contains(c) && c.getEmail().equalsIgnoreCase(email); \result == c)
+      @   || \result == null;
+      @*/
     public static Cliente findByEmail(String email) {
         return clientes.stream()
-                .filter(cliente -> cliente.getEmail().toUpperCase().contains(email.toUpperCase()))
-                .findFirst().orElse(null);
+                .filter(cliente -> cliente.getEmail().equalsIgnoreCase(email))
+                .findFirst()
+                .orElse(null);
     }
-
-    public static List<Cliente> findByMetodoPagamento(String metodoPagamento) {
-        return clientes.stream()
-                .filter(cliente -> cliente.getMetodoPagamento().toUpperCase().contains(metodoPagamento.toUpperCase()))
-                .collect(Collectors.toList());
-    }
-
-    public static List<Cliente> findByDataCadastro(LocalDate dataCadastro) {
-        return clientes.stream()
-                .filter(cliente -> cliente.getDataCadastro().equals(dataCadastro))
-                .collect(Collectors.toList());
-    }
-
 }

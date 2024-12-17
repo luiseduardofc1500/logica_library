@@ -9,6 +9,6 @@ public interface IItemInventario {
     /*@ pure @*/
     String getDescricao();
 
-    //@ requires descricao != ""
+    //@ requires descricao != "";
     void setDescricao(String descricao);
 }
