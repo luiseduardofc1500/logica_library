@@ -10,15 +10,6 @@ public class CategoriaServiceImpl implements CategoriaService {
         CategoriaRepository.save(categoria);
         System.out.println("Categoria " + categoria.getNome() + " adicionada com sucesso!");
     }
-
-    public void atualizarCategoria(long id, Categoria categoria) {
-        try {
-            CategoriaRepository.atualizarCategoria(id, categoria);
-            System.out.println("Categoria " + categoria.getNome() + " atualizado com sucesso!");
-        } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
-        }
-    }
     
     public Categoria buscarCategoriaPorNome(String nome) {
         Categoria categoria = CategoriaRepository.findByName(nome);

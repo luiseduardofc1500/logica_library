@@ -1,81 +1,61 @@
-    package br.com.fatecmogidascruzes.model.repository;
+package br.com.fatecmogidascruzes.model.repository;
 
 import br.com.fatecmogidascruzes.model.entity.Funcionario;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class FuncionarioRepository {
-
+    //@ spec_public
     private static final List<Funcionario> funcionarios = new ArrayList<>();
-    private static long ultimoId = 0;
 
+    //@ requires funcionario != null;
     public static void save(Funcionario funcionario) {
-        funcionario.setId(++ultimoId);
-        funcionarios.add(funcionario);
-    }
-
-    public static void alterarFuncionario(long id, Funcionario funcionario) {
-        int index = findIndexPorId(id);
-        if (index != -1) {
-            funcionario.setId(id);
-            funcionarios.set(index, funcionario);
-        }
-        else{
-            throw new IllegalArgumentException("Ocorreu algo de errado ao atualizar informações do funcionario, por favor verifique as informações e tente novamente");
+        if (findByEmail(funcionario.getEmail()) == null) {
+            funcionarios.add(funcionario);
+        } else {
+            throw new IllegalArgumentException("Funcionário com o email já existe.");
         }
     }
 
-    public static void removerFuncionario(long id) {
-        Funcionario funcionario = findById(id);
+    //@ requires email != null;
+    public static void removerFuncionario(String email) {
+        //@ nullable
+        Funcionario funcionario = findByEmail(email);
         if (funcionario != null) {
             funcionarios.remove(funcionario);
-        } else 
-            throw new IllegalArgumentException("Funcionario não encontrado.");
+        } else {
+            throw new IllegalArgumentException("Funcionário com email não encontrado.");
+        }
     }
 
     public static List<Funcionario> findAll() {
-        return funcionarios;
+        return new ArrayList<>(funcionarios);
     }
 
-    public static int findIndexPorId(long id) {
-        return funcionarios.stream()
-                .filter(funcionario -> funcionario.getId() == id)
-                .findFirst()
-                .map(funcionarios::indexOf)
-                .orElse(-1);
-    }
-    
-    public static Funcionario findById(long id) {
-        return funcionarios.stream()
-                .filter(funcionario -> funcionario.getId() == id)
-                .findFirst().orElse(null);
-    }
 
-    public static List<Funcionario> findByNome(String nome) {
-        return funcionarios.stream()
-                .filter(cliente -> cliente.getNome().toUpperCase().contains(nome.toUpperCase()))
-                .collect(Collectors.toList());
-    }
 
+    //@ requires email != null;
+    //@ ensures (\result == null || (\result.getEmail() != null && \result.getEmail().equalsIgnoreCase(email)));
+    //@ ensures (\forall int i; 0 <= i && i < funcionarios.size(); !funcionarios.get(i).getEmail().equalsIgnoreCase(email)) ==> \result == null;
+    //@ nullable
+    //@ pure
     public static Funcionario findByEmail(String email) {
-        return funcionarios.stream()
-                .filter(funcionario -> funcionario.getEmail().toUpperCase().contains(email.toUpperCase()))
-                .findFirst().orElse(null);
+        //@ loop_invariant 0 <= j && j <= funcionarios.size();
+        //@ loop_invariant (\forall int k; 0 <= k && k < j; !funcionarios.get(k).getEmail().equalsIgnoreCase(email));
+        //@ decreasing funcionarios.size() - j;
+        for (int j = 0; j < funcionarios.size(); j++) {
+            //@ assume funcionarios.get(j) != null;
+            Funcionario funcionario = funcionarios.get(j);
+            if (funcionario.getEmail().equalsIgnoreCase(email)) {
+                //@ assert funcionario.getEmail().equalsIgnoreCase(email);
+                return funcionario;
+            }
+        }
+        //@ assert (\forall int i; 0 <= i && i < funcionarios.size(); !funcionarios.get(i).getEmail().equalsIgnoreCase(email));
+        return null;
     }
 
-    public static List<Funcionario> findByCargo(String cargo) {
-        return funcionarios.stream()
-                .filter(cliente -> cliente.getCargo().toUpperCase().contains(cargo.toUpperCase()))
-                .collect(Collectors.toList());
-    }
 
-    public static List<Funcionario> findByDataContratacao(LocalDate dataContratacao) {
-        return funcionarios.stream()
-                .filter(cliente -> cliente.getDataContratacao().equals(dataContratacao))
-                .collect(Collectors.toList());
-    }
 
 }

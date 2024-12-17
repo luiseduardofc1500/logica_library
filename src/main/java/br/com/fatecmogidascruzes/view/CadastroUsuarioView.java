@@ -77,7 +77,7 @@ public class CadastroUsuarioView {
             confirmarCadastro = scanner.nextInt();
             switch (confirmarCadastro) {
                 case 1:
-                    clienteService.adicionarCliente(new Cliente(email, nome, senha, endereco, telefone, metodoPagamento, LocalDate.now()));
+                    clienteService.adicionarCliente(new Cliente(email, nome, senha, endereco, telefone, metodoPagamento));
                     return true;
                 case 2:
                     System.out.println("\nCadastro cancelado.");

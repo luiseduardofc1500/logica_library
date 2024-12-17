@@ -16,16 +16,6 @@ public class LivroRepository {
 		livros.add(livro);
 	}
 
-	public static void atualizarLivro(long id, Livro livro) {
-		int index = findIndexPorId(id);
-		if (index != -1) {
-			livro.setId(id);
-			livros.set(index, livro);
-		} else {
-			throw new IllegalArgumentException("Ocorreu algo de errado ao atualizar informações do livro, por favor verifique as informações e tente novamente");
-		}
-	}
-
 	public static void removerLivro(Livro livro) {
 		if (livro != null) {
 			livros.remove(livro);

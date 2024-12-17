@@ -4,7 +4,7 @@ import br.com.fatecmogidascruzes.validator.LivroValidator;
 
 import java.time.LocalDate;
 
-public class Livro {
+public class Livro implements IItemInventario {
 
     private long id;
     private String isbn10;
@@ -12,6 +12,13 @@ public class Livro {
     private String titulo;
     private String idioma;
     private String autor;
+    private String descricao;
+    private int estoque;
+    private String editora;
+    private int numeroDePaginas;
+    private LocalDate dataDePublicacao;
+    private double preco;
+    private String categoria;
 
     public String getCategoria() {
         return categoria;
@@ -61,12 +68,6 @@ public class Livro {
         return id;
     }
 
-    private int estoque;
-    private String editora;
-    private int numeroDePaginas;
-    private LocalDate dataDePublicacao;
-    private double preco;
-    private String categoria;
 
     public Livro(String isbn10, String isbn13, String titulo, String idioma, String autor, int estoque, String editora, int numeroDePaginas, LocalDate dataDePublicacao, double preco, String categoria) { 
         setIsbn10(isbn10);
@@ -226,22 +227,17 @@ public class Livro {
         }
     }
 
+
     @Override
-    public String toString() {
-        return "\n Livro {" +
-            "\n  id = " + id +
-            "\n  isbn-10 = " + isbn10 +
-            "\n  isbn-13 = " + isbn13 +
-            "\n  titulo = " + titulo  +
-            "\n  idioma = " + idioma +
-            "\n  autor = " + autor +
-            "\n  estoque = " + estoque +
-            "\n  editora = " + editora +
-            "\n  numeroDePaginas = " + numeroDePaginas +
-            "\n  dataDePublicacao = " + dataDePublicacao +
-            "\n  preço = " + preco +
-            "\n  categoria = " + categoria +
-            "\n }\n";
+    public String getDescricao() {
+        return descricao;
     }
 
+    @Override
+    public void setDescricao(String descricao) {
+        if (descricao == null || descricao.isEmpty()) {
+            throw new IllegalArgumentException("Descrição não pode ser vazia.");
+        }
+        this.descricao = descricao;
+    }
 }
