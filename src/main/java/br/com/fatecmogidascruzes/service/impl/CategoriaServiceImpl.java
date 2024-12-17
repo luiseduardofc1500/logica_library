@@ -19,7 +19,7 @@ public class CategoriaServiceImpl implements CategoriaService {
             System.out.println(e.getMessage());
         }
     }
-    
+
     public Categoria buscarCategoriaPorNome(String nome) {
         Categoria categoria = CategoriaRepository.findByName(nome);
         if (categoria != null) {
