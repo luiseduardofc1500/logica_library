@@ -7,7 +7,7 @@ public class Cliente extends Usuario {
 
     //@ public normal_behavior
     //@   requires nome != "";
-    //@   requires email != "";
+    //@   requires email != "" && email.endsWith("@cliente.com") ;
     //@   requires senha != "" && senha.length() >= 8;
     //@   requires endereco != "";
     //@   requires telefone != "";
@@ -16,6 +16,7 @@ public class Cliente extends Usuario {
     //@   ensures email2 == email;
     //@   ensures senha2 == senha;
     //@   ensures endereco2 == endereco;
+    //@   ensures telefone2 == telefone;
     public Cliente(String nome, String email, String senha, String endereco, String telefone, String metodoPagamento) {
         super(nome, email, senha, endereco, telefone);
         this.metodoPagamento = metodoPagamento;
@@ -31,5 +32,11 @@ public class Cliente extends Usuario {
     //@   requires metodoPagamento != "";
     public void setMetodoPagamento(String metodoPagamento) {
         this.metodoPagamento = metodoPagamento;
+    }
+    //@ also
+    //@ requires email != "" && email.endsWith("@cliente.com");
+    @Override
+    public void setEmail(String email) {
+        super.setEmail(email);
     }
 }

@@ -22,10 +22,12 @@ public class Usuario implements IUsuario {
     //@		requires senha != "" && senha.length() >= 8;
     //@		requires endereco != "";
     //@		requires telefone != "";
+    //@     assignable nome2, email2, senha2, endereco2, telefone2;
     //@ 	ensures nome2 == nome;
     //@		ensures email2 == email;
     //@ 	ensures senha2 == senha;
     //@ 	ensures endereco2 == endereco;
+    //@ 	ensures telefone2 == telefone;
     public Usuario(String nome, String email, String senha, String endereco, String telefone) {
         this.nome = nome;
         this.email = email;
