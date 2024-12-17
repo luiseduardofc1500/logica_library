@@ -24,6 +24,7 @@ public class Cliente extends Usuario {
 
     //@ public normal_behavior
     //@   ensures \result == metodoPagamento;
+    //@ pure
     public String getMetodoPagamento() {
         return metodoPagamento;
     }

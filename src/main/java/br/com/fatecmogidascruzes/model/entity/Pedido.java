@@ -127,16 +127,5 @@ public class Pedido {
         }
     }
 
-    @Override
-    public String toString() {
-        return "\n Pedido {" +
-            "\n  id = " + id +
-            "\n  email = " + emailCliente +
-            "\n  data compra = " + dataPedido +
-            "\n  status = " + statusPedido  +
-            "\n  preço total = " + precoTotal +
-            "\n  endereço entrega = " + enderecoEntrega+
-            "\n }\n";
-    }
 
 }

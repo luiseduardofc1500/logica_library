@@ -227,23 +227,6 @@ public class Livro implements IItemInventario {
         }
     }
 
-    @Override
-    public String toString() {
-        return "\n Livro {" +
-            "\n  id = " + id +
-            "\n  isbn-10 = " + isbn10 +
-            "\n  isbn-13 = " + isbn13 +
-            "\n  titulo = " + titulo  +
-            "\n  idioma = " + idioma +
-            "\n  autor = " + autor +
-            "\n  estoque = " + estoque +
-            "\n  editora = " + editora +
-            "\n  numeroDePaginas = " + numeroDePaginas +
-            "\n  dataDePublicacao = " + dataDePublicacao +
-            "\n  preço = " + preco +
-            "\n  categoria = " + categoria +
-            "\n }\n";
-    }
 
     @Override
     public String getDescricao() {

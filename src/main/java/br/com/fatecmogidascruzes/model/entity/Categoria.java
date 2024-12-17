@@ -63,23 +63,9 @@ public class Categoria implements IItemInventario {
     }
 
 
-
-    @Override
-    public String toString() {
-        return "\n Categoria {" +
-                "\n  Id = " + id +
-                "\n  Nome = " + nome +
-                "\n  Descricao = " + descricao +
-                "\n }\n";
-    }
-
-
-
-
-
-public String getDescricao() {
-        return descricao;
-    }
+    public String getDescricao() {
+            return descricao;
+        }
 
     public void setDescricao(String descricao) {
         if (descricao != "") {

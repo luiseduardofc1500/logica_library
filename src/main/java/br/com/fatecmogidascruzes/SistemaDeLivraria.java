@@ -65,34 +65,7 @@ public class SistemaDeLivraria {
         pedidoService.adicionarPedido(new Pedido("leo123@gmail.com", "Harry Potter", LocalDate.now(), 1, 50.0, "fatec"));
         System.out.println(PedidoRepository.findAll());
 
-        //******************************************
 
-        //TESTES DE ATUALIZAR ENTIDADES
-        System.out.println("\n**---- ATUALIZAR ---**");
-
-        //testando atualizar livros
-        System.out.println("\n---- ATUALIZANDO LIVROS ---" );
-        Livro livroExistente = LivroRepository.findById(1);
-        if (livroExistente != null) {
-            livroService.atualizarLivro(livroExistente.getId(), new Livro("0123456789", "", "Biblia", "Portugues", "profeta", 0, "Reino do Ceus", 1000, dataDePublicacao, 300.00, "Religiao"));
-        } else {
-            System.out.println("Livro não encontrado para atualização.");
-        }
-
-        //testando atualizar funcionário
-        System.out.println("\n---- ATUALIZANDO FUNCIONÁRIO ---" );
-        funcionarioService.atualizarFuncionario("leo123@gmail.com", new Funcionario("ana@email.com", "ANA PAULA", "Paulao%123", "Endereço da Ana", "12934567890", "Cargo da Ana", LocalDate.now()));
-
-        // Testando atualizar cliente
-        System.out.println("\n---- ATUALIZAR CLIENTE ---" );
-        clienteService.atualizarCliente("leo123@gmail.com", new Cliente("antony@email.com", "Romulo da silva", "Silvaro%1mulo", "Romulandia", "11988521035", "moedinhas de 1 centavo"));
-
-        // Testando atualizar categoria
-        System.out.println("\n---- ATUALIZAR CATEGORIA ---" );
-        categoriaService.atualizarCategoria(1, new Categoria("Romance de Época", "Livros de Romance e Fanfics de época."));
-        System.out.println(CategoriaRepository.findAllCategorias());
-
-        //******************************************
 
         //TESTES DE EXCLUIR ENTIDADES
         System.out.println("\n**---- EXCLUIR ---**");

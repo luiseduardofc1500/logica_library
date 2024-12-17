@@ -23,22 +23,7 @@ public class ClienteServiceImpl implements ClienteService {
         }
     }
 
-    @Override
-    public void atualizarCliente(String email, Cliente clienteAtualizado) {
-        try {
-            Cliente clienteExistente = ClienteRepository.findByEmail(email);
-            if (clienteExistente != null) {
-                clienteExistente.setNome(clienteAtualizado.getNome());
-                clienteExistente.setMetodoPagamento(clienteAtualizado.getMetodoPagamento());
-                ClienteRepository.save(clienteExistente);
-                System.out.println("Cliente com email " + email + " atualizado com sucesso!");
-            } else {
-                throw new IllegalArgumentException("Cliente com email não encontrado.");
-            }
-        } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
-        }
-    }
+
 
     @Override
     public Cliente buscarClientePorEmail(String email) {
@@ -52,9 +37,8 @@ public class ClienteServiceImpl implements ClienteService {
     @Override
     public void excluirCliente(String email) {
         try {
-            Cliente cliente = ClienteRepository.findByEmail(email);
-            if (cliente != null) {
-                ClienteRepository.removerCliente(cliente);
+            if (email != null) {
+                ClienteRepository.removerCliente(email);
                 System.out.println("Cliente com email '" + email + "' removido com sucesso!");
             } else {
                 throw new IllegalArgumentException("Cliente com email não encontrado.");

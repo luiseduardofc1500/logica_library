@@ -5,7 +5,6 @@ import br.com.fatecmogidascruzes.model.entity.Categoria;
 public interface CategoriaService {
 
     void adicionarCategoria(Categoria categoria);
-    void atualizarCategoria(int id, Categoria categoria);
     void excluirCategoria(int id);
     Categoria buscarCategoriaPorNome(String nome);
 }

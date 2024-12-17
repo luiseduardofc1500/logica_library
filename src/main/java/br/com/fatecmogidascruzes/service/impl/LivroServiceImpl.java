@@ -15,15 +15,7 @@ public class LivroServiceImpl implements LivroService {
         System.out.println("Livro cadastrado com sucesso!");
     }
 
-    @Override
-    public void atualizarLivro(long id, Livro livro) {
-        try {
-            LivroRepository.atualizarLivro(id, livro);
-            System.out.println("Livro " + livro.getTitulo() + " atualizado com sucesso!");
-        } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
-        }
-    }
+
     
     @Override
     public void excluirLivroPorId(long id) {
