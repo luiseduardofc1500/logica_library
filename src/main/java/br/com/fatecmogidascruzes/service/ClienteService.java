@@ -4,9 +4,9 @@ import br.com.fatecmogidascruzes.model.entity.Cliente;
 
 public interface ClienteService {
 
+     //@ requires cliente != null && cliente.getEmail() != null;
     void adicionarCliente(Cliente cliente);
 
-    void excluirCliente(String email);
 
-    Cliente buscarClientePorEmail(String email);
+
 }

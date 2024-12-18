@@ -47,7 +47,7 @@ public class LoginView {
         System.out.print("\nDigite sua senha:");
         String senha = scanner.next();
 
-        if(Boolean.TRUE.equals(UsuarioValidator.validarLogin(email, senha, 1))){
+        if(Boolean.TRUE.equals(UsuarioValidator.validarLogin(email, senha, 1,true))){
             return ClienteRepository.findByEmail(email);
         }
         return null;
