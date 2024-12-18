@@ -9,42 +9,39 @@ import java.util.List;
 
 public class ClienteServiceImpl implements ClienteService {
 
+
     @Override
     public void adicionarCliente(Cliente cliente) {
-        try {
-            if (UsuarioValidator.validarEmail(cliente)) {
-                ClienteRepository.save(cliente);
-                System.out.println("Cliente " + cliente.getNome() + " adicionado com sucesso!");
-            } else {
-                throw new IllegalArgumentException("Email já cadastrado.");
-            }
-        } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
+        if (UsuarioValidator.validarEmail(cliente)) {
+            ClienteRepository.save(cliente);
+            log("Cliente " + cliente.getNome() + " adicionado com sucesso!");
+        } else {
+            log("Email inválido. Por favor, insira um email válido.");
         }
     }
 
+    //@ skipesc
+    private void log(String message) {
+        System.out.println(message);
+    }
 
 
-    @Override
+    //@ skipesc
     public Cliente buscarClientePorEmail(String email) {
         Cliente cliente = ClienteRepository.findByEmail(email);
         if (cliente == null) {
-            System.out.println("Cliente com email '" + email + "' não encontrado.");
+            log("Cliente com email: " + email + " não encontrado!");
         }
         return cliente;
     }
-
-    @Override
+    //@ skipesc
     public void excluirCliente(String email) {
-        try {
-            if (email != null) {
-                ClienteRepository.removerCliente(email);
-                System.out.println("Cliente com email '" + email + "' removido com sucesso!");
-            } else {
-                throw new IllegalArgumentException("Cliente com email não encontrado.");
-            }
-        } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
+        try{
+            ClienteRepository.removerCliente(email);
+            log("Cliente com email:  " + email + " removido com sucesso!");
+        } catch (IllegalArgumentException e){
+            log(e.getMessage() + " Verifique o email informado.");
         }
     }
+
 }
