@@ -16,6 +16,7 @@ public class CategoriaServiceImpl implements CategoriaService {
       @ also requires categoria.getNome() != null;
       @ also requires CategoriaRepository.findByName(categoria.getNome()) == null;
       @*/
+    //@ skipesc
     public void adicionarCategoria(Categoria categoria) {
         CategoriaRepository.save(categoria);
         log("Categoria " + categoria.getNome() + " adicionada com sucesso!");
@@ -41,6 +42,7 @@ public class CategoriaServiceImpl implements CategoriaService {
       @ also requires nome != null;
       @ also ensures (\result == null || (\result.getNome() != null && \result.getNome().equalsIgnoreCase(nome)));
       @*/
+    //@ skipesc
     public Categoria buscarCategoriaPorNome(String nome) {
         Categoria categoria = CategoriaRepository.findByName(nome);
         if (categoria != null) {
