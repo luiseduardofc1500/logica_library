@@ -3,7 +3,7 @@ package br.com.fatecmogidascruzes.validator;
 public class LivroValidator {
 
 
-    /*@ public normal_behavior
+    /*@
     @     requires isbn10 != null && isbn10.length() == 10;
     @     ensures \result == (isbn10.charAt(9) ==
     @         Character.forDigit(
@@ -23,7 +23,8 @@ public class LivroValidator {
     public static boolean validarIsbn10(String isbn10) {
         int soma = 0;
         for (int i = 0; i < 9; i++) {
-            soma += (10 - i) * Character.getNumericValue(isbn10.charAt(i));
+            int valorDigito = Character.getNumericValue(isbn10.charAt(i));
+            soma += (10 - i) * valorDigito;
         }
 
         soma = (11 - (soma % 11)) % 11;
@@ -33,7 +34,7 @@ public class LivroValidator {
 
 
 
-    /*@ public normal_behavior
+    /*@
       @     requires isbn13 != null && isbn13.length() == 13;
       @     ensures \result == (isbn13.charAt(12) ==
       @         Character.forDigit(
@@ -56,7 +57,8 @@ public class LivroValidator {
     public static boolean validarIsbn13(String isbn13) {
         int soma = 0;
         for (int i = 0; i < 12; i++) {
-            soma += ((i % 2 == 0) ? 1 : 3) * Character.getNumericValue(isbn13.charAt(i));
+            int valorDigito = Character.getNumericValue(isbn13.charAt(i));
+            soma += ((i % 2 == 0) ? 1 : 3) * valorDigito;
         }
 
         soma = (10 - (soma % 10)) % 10;
