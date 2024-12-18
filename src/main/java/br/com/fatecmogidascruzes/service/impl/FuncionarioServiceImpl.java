@@ -11,39 +11,40 @@ public class FuncionarioServiceImpl implements FuncionarioService {
 
     @Override
     public void adicionarFuncionario(Funcionario funcionario) {
-        try {
-            if (UsuarioValidator.validarEmail(funcionario)) {
-                FuncionarioRepository.save(funcionario);
-                System.out.println("Funcionário " + funcionario.getNome() + " adicionado com sucesso!");
-            } else {
-                throw new IllegalArgumentException("Email já cadastrado.");
-            }
-        } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
+        if (UsuarioValidator.validarEmail(funcionario)) {
+            FuncionarioRepository.save(funcionario);
+            log("Funcionário " + funcionario.getNome() + " adicionado com sucesso!");
+        } else {
+            log("Email inválido. Por favor, insira um email válido.");
         }
+
     }
 
+    //@ skipesc
+    private void log(String message) {
+        System.out.println(message);
+    }
 
-    @Override
+    //@ skipesc
     public void excluirFuncionario(String email) {
         try {
             FuncionarioRepository.removerFuncionario(email);
-            System.out.println("Funcionário removido com sucesso!");
+            log("Funcionário removido com sucesso!");
         } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage() + " Verifique o email informado.");
+            log(e.getMessage() + " Verifique o email informado.");
         }
     }
 
-    @Override
+    //@ skipesc
     public List<Funcionario> buscarTodosFuncionarios() {
         return FuncionarioRepository.findAll();
     }
 
-    @Override
+    //@ skipesc
     public Funcionario buscarPorEmail(String email) {
         Funcionario funcionario = FuncionarioRepository.findByEmail(email);
         if (funcionario == null) {
-            System.out.println("Funcionário com email '" + email + "' não encontrado.");
+            log("Funcionário com email '" + email + "' não encontrado.");
         }
         return funcionario;
     }
