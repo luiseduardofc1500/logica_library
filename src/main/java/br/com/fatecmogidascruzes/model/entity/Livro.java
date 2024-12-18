@@ -13,6 +13,7 @@ public class Livro implements IItemInventario {
     private String idioma;
     private String autor;
     private String descricao;//@ in descricao2;
+    //@ spec_public
     private int estoque;
     private String editora;
     private int numeroDePaginas;
@@ -184,6 +185,7 @@ public class Livro implements IItemInventario {
 
     /*@
     @ requires estoque >= 0;
+    @ ensures this.estoque == estoque || (\old(this.estoque) == this.estoque && estoque < 0);
     @*/
     public void setEstoque(int estoque) {
         try {
