@@ -5,8 +5,7 @@ import br.com.fatecmogidascruzes.model.entity.Funcionario;
 import java.util.List;
 
 public interface FuncionarioService {
+    //@ requires funcionario != null && funcionario.getEmail() != null;
     void adicionarFuncionario(Funcionario funcionario);
-    void excluirFuncionario(String email);
-    List<Funcionario> buscarTodosFuncionarios();
-    Funcionario buscarPorEmail(String email);
+
 }
