@@ -11,7 +11,7 @@ public class Funcionario extends Usuario {
 
     //@ public normal_behavior
     //@   requires nome != "";
-    //@   requires email != "" && email.endsWith("@cliente.com") ;
+    //@   requires email != "" && email.endsWith("@funcionario.com") ;
     //@   requires senha != "" && senha.length() >= 8;
     //@   requires endereco != "";
     //@   requires telefone != "";

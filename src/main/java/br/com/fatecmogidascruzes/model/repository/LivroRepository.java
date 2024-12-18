@@ -12,7 +12,7 @@ public class LivroRepository {
 	private static long ultimoId = 0;
 
 	public static void save(Livro livro) {
-		livro.setId(++ultimoId);
+		livro.setId((int) ++ultimoId);
 		livros.add(livro);
 	}
 
