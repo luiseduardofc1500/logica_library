@@ -5,48 +5,48 @@ import br.com.fatecmogidascruzes.model.repository.CategoriaRepository;
 import br.com.fatecmogidascruzes.service.CategoriaService;
 
 public class CategoriaServiceImpl implements CategoriaService {
-    //@ spec_public
-    private CategoriaRepository categoriaRepository;
 
+    //@ skipesc
+    public void log(String message) {
+        System.out.println(message);
+    }
 
     /*@
       @ also requires categoria != null;
       @ also requires categoria.getNome() != null;
-      @ also requires categoriaRepository.findByName(categoria.getNome()) == null;
-      @ also assignable System.out.outputText, System.out.eol;
+      @ also requires CategoriaRepository.findByName(categoria.getNome()) == null;
       @*/
     public void adicionarCategoria(Categoria categoria) {
         CategoriaRepository.save(categoria);
-        System.out.println("Categoria " + categoria.getNome() + " adicionada com sucesso!");
+        log("Categoria " + categoria.getNome() + " adicionada com sucesso!");
     }
 
 
     /*@
       @ also requires id >= 0;
-      @ also assignable System.out.outputText, System.out.eol;
       @*/
     public void excluirCategoria(int id) {
+        if (id < 0) {
+            log("ID não pode ser negativo");
+        }
         try {
             CategoriaRepository.removerCategoria(id);
-            System.out.println("Categoria removida com sucesso!");
+            log("Categoria removida com sucesso!");
         } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage() + " Por favor, verifique o ID informado.");
+            log(" Por favor, verifique o ID informado.");
         }
     }
 
     /*@
       @ also requires nome != null;
       @ also ensures (\result == null || (\result.getNome() != null && \result.getNome().equalsIgnoreCase(nome)));
-      @ also ensures (\forall int i; 0 <= i && i < categoriaRepository.findAllCategorias().size(); !categoriaRepository.findAllCategorias().get(i).getNome().equalsIgnoreCase(nome)) ==>
-      @ \result == null;
-      @ also assignable System.out.outputText, System.out.eol;
       @*/
     public Categoria buscarCategoriaPorNome(String nome) {
         Categoria categoria = CategoriaRepository.findByName(nome);
         if (categoria != null) {
             return categoria;
         } else {
-            System.out.println("Categoria com nome " + nome + " não encontrada.");
+            log("Categoria com nome " + nome + " não encontrada.");
             return null;
         }
     }

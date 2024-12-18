@@ -126,9 +126,9 @@ public class SistemaDeLivraria {
         
         // Testando a busca de categoria
         System.out.println("\n---- BUSCAR CATEGORIA---");
-        System.out.println("\nbuscando cateogira romance...");
+        System.out.println("\nbuscando categoria romance...");
         System.out.println(categoriaService.buscarCategoriaPorNome("Romance"));
-        System.out.println("\n\nbuscando cateogira ficcao (inexistente)...");
+        System.out.println("\n\nbuscando categoria ficcao (inexistente)...");
         System.out.println(categoriaService.buscarCategoriaPorNome("Ficção"));
 
         // Testando a busca de pedido
