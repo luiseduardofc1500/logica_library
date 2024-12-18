@@ -6,19 +6,21 @@ import java.time.LocalDate;
 
 public class Livro implements IItemInventario {
 
-    private long id;
+    private int id;
     private String isbn10;
     private String isbn13;
     private String titulo;
     private String idioma;
     private String autor;
-    private String descricao;
+    private String descricao;//@ in descricao2;
     private int estoque;
     private String editora;
     private int numeroDePaginas;
     private LocalDate dataDePublicacao;
     private double preco;
     private String categoria;
+
+    //@ private represents descricao2 = this.descricao;
 
     public String getCategoria() {
         return categoria;
@@ -68,7 +70,19 @@ public class Livro implements IItemInventario {
         return id;
     }
 
-
+    /*@
+    @ requires isbn10 != null;
+    @ requires isbn13 != null;
+    @ requires titulo != null;
+    @ requires idioma != null;
+    @ requires autor != null;
+    @ requires estoque >= 0;
+    @ requires editora != null;
+    @ requires numeroDePaginas >= 1;
+    @ requires dataDePublicacao != null;
+    @ requires preco >= 0;
+    @ requires categoria != null;
+    @*/
     public Livro(String isbn10, String isbn13, String titulo, String idioma, String autor, int estoque, String editora, int numeroDePaginas, LocalDate dataDePublicacao, double preco, String categoria) { 
         setIsbn10(isbn10);
         setIsbn13(isbn13);
@@ -83,7 +97,10 @@ public class Livro implements IItemInventario {
         setCategoria(categoria);
     }
 
-    public void setId(long id) {
+    /*@
+    @ requires id >= 0;
+    @*/
+    public void setId(int id) {
         try {
             if (id < 0) {
                 throw new IllegalArgumentException("ID não pode ser negativo.");
@@ -94,6 +111,9 @@ public class Livro implements IItemInventario {
         }
     }
 
+    /*@
+    @ requires isbn10 != null;
+    @*/
     public void setIsbn10(String isbn10) {
         try {
             if (isbn10 != null && !isbn10.isEmpty()) {
@@ -227,12 +247,13 @@ public class Livro implements IItemInventario {
         }
     }
 
-
+    // also ensures \result == descricao2;
     @Override
     public String getDescricao() {
         return descricao;
     }
 
+    //@ also requires descricao != "";
     @Override
     public void setDescricao(String descricao) {
         if (descricao == null || descricao.isEmpty()) {
