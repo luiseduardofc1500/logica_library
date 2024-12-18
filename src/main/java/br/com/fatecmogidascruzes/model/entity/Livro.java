@@ -42,7 +42,7 @@ public class Livro implements IItemInventario {
         return editora;
     }
 
-    public int getEstoque() {
+    public /*@ pure @*/ int getEstoque() {
         return estoque;
     }
 
@@ -71,17 +71,17 @@ public class Livro implements IItemInventario {
     }
 
     /*@
-    @ requires isbn10 != null;
-    @ requires isbn13 != null;
-    @ requires titulo != null;
-    @ requires idioma != null;
-    @ requires autor != null;
+    @ requires isbn10 != "";
+    @ requires isbn13 != "";
+    @ requires titulo != "";
+    @ requires idioma != "";
+    @ requires autor != "";
     @ requires estoque >= 0;
-    @ requires editora != null;
+    @ requires editora != "";
     @ requires numeroDePaginas >= 1;
     @ requires dataDePublicacao != null;
     @ requires preco >= 0;
-    @ requires categoria != null;
+    @ requires categoria != "";
     @*/
     public Livro(String isbn10, String isbn13, String titulo, String idioma, String autor, int estoque, String editora, int numeroDePaginas, LocalDate dataDePublicacao, double preco, String categoria) { 
         setIsbn10(isbn10);
@@ -111,9 +111,7 @@ public class Livro implements IItemInventario {
         }
     }
 
-    /*@
-    @ requires isbn10 != null;
-    @*/
+
     public void setIsbn10(String isbn10) {
         try {
             if (isbn10 != null && !isbn10.isEmpty()) {
@@ -131,6 +129,7 @@ public class Livro implements IItemInventario {
         }
     }
 
+
     public void setIsbn13(String isbn13) {
         try {
             if (isbn13 != null && !isbn13.isEmpty()) {
@@ -147,6 +146,7 @@ public class Livro implements IItemInventario {
             System.out.println(e.getMessage() + " Por favor insira um ISBN-13 válido.");
         }
     }
+
 
     public void setTitulo(String titulo) {
         try {
@@ -170,6 +170,7 @@ public class Livro implements IItemInventario {
         }
     }
 
+
     public void setAutor(String autor) {
         try {
             if (autor == null || autor.isEmpty()) {
@@ -181,6 +182,9 @@ public class Livro implements IItemInventario {
         }
     }
 
+    /*@
+    @ requires estoque >= 0;
+    @*/
     public void setEstoque(int estoque) {
         try {
             if (estoque < 0) {
@@ -192,6 +196,9 @@ public class Livro implements IItemInventario {
         }
     }
 
+    /*@
+    @ requires editora != null;
+    @*/
     public void setEditora(String editora) {
         try {
             if (editora == null || editora.isEmpty()) {
@@ -214,6 +221,7 @@ public class Livro implements IItemInventario {
         }
     }
 
+
     public void setDataDePublicacao(LocalDate dataDePublicacao) {
         try {
             if (dataDePublicacao == null) {
@@ -235,6 +243,7 @@ public class Livro implements IItemInventario {
             System.out.println(e.getMessage() + " Por favor insira um preço válido.");
         }
     }
+
 
     public void setCategoria(String categoria) {
         try {

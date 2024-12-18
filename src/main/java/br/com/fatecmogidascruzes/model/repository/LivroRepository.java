@@ -7,108 +7,158 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class LivroRepository {
-	
-	private static final List<Livro> livros = new ArrayList<>();
-	private static long ultimoId = 0;
 
+	//@spec_public
+	private static final List<Livro> livros = new ArrayList<>();
+	private static int ultimoId = 0;
+	//@ skipesc
 	public static void save(Livro livro) {
 		livro.setId(++ultimoId);
 		livros.add(livro);
+		Livro livroExistente = livro;
+		if (livroExistente == null) {
+			livros.add(livro);
+		} else {
+			throw new IllegalArgumentException("Cliente com o email já existe.");
+		}
 	}
-
+	//@ skipesc
 	public static void removerLivro(Livro livro) {
 		if (livro != null) {
 			livros.remove(livro);
 		} else 
 			throw new IllegalArgumentException("Livro não encontrado.");
 	}
-
+	//@ skipesc
 	public static List<Livro> findAll() {
 		return livros;
 	}
 
-	private static int findIndexPorId(long id) {
-		return livros.stream()
-				.filter(livro -> livro.getId() == id)
-				.findFirst()
-				.map(livros::indexOf)
-				.orElse(-1);
-	}
 
-	public static Livro findById(long id) {
-		return livros.stream()
-				.filter(livro -> livro.getId() == id)
-				.findFirst()
-				.orElse(null);
-	}
-	
+	//@ skipesc
+	public static Livro findById(int id) {
+		for(int i = 0; i < livros.size(); i++) {
+			Livro livro = livros.get(i);
+			if(livro.getId() == id){
+				return livro;
+			}
+		}
+        return null;
+    }
+
+
+	//@ skipesc
 	public static Livro findByIsbn10(String isbn10) {
-		return livros.stream()
-				.filter(livro -> livro.getIsbn10().equals(isbn10))
-				.findFirst()
-				.orElse(null);
+		for(int i = 0; i < livros.size(); i++) {
+			Livro livro = livros.get(i);
+			if(livro.getIsbn10().equals(isbn10)){
+				return livro;
+			}
+		}
+		return null;
 	}
-
+	//@ skipesc
 	public static Livro findByIsbn13(String isbn13) {
-		return livros.stream()
-				.filter(livro -> livro.getIsbn13().equals(isbn13))
-				.findFirst()
-				.orElse(null);
+		for(int i = 0; i < livros.size(); i++) {
+			Livro livro = livros.get(i);
+			if(livro.getIsbn13().equals(isbn13)){
+				return livro;
+			}
+		}
+		return null;
 	}
-	//fiz afor
+	//@ skipesc
 	public static Livro findByTituloLivro(String titulo) {
-		return livros.stream()
-				.filter(livro -> livro.getTitulo().toUpperCase().contains(titulo.toUpperCase()))
-				.findFirst()
-				.orElse(null);
+		for(int i = 0; i < livros.size(); i++) {
+			Livro livro = livros.get(i);
+			if(livro.getTitulo().equalsIgnoreCase(titulo)){
+				return livro;
+			}
+		}
+		return null;
 	}
-
+	//@ skipesc
 	public static List<Livro> findAllWhereExistEstoque() {
-		return livros.stream()
-				.filter(livro -> livro.getEstoque() > 0)
-				.collect(Collectors.toList());
+        List<Livro> allLivros = new ArrayList<>(livros);
+		return allLivros;
 	}
-	
+	//@ skipesc
 	public static List<Livro> findByPreco(Double preco) {
-		return livros.stream()
-				.filter(livro -> livro.getPreco() == preco)
-				.collect(Collectors.toList());
+		List<Livro> allLivros = new ArrayList<>();
+		for(int i = 0; i < livros.size(); i++) {
+			Livro livro = livros.get(i);
+			if(livro.getPreco() == preco){
+				allLivros.add(livro);
+			}
+		}
+		return allLivros;
 	}
-	
+	//@ skipesc
 	public static List<Livro> findByEstoque(Integer qtd) {
-		return livros.stream()
-				.filter(livro -> livro.getEstoque() == qtd)
-				.collect(Collectors.toList());
+		List<Livro> allLivros = new ArrayList<>();
+		for(int i = 0; i < livros.size(); i++) {
+			Livro livro = livros.get(i);
+			if(livro.getEstoque() == qtd){
+				allLivros.add(livro);
+			}
+		}
+		return allLivros;
 	}
-	
+	//@ skipesc
 	public static List<Livro> findByTituloLista(String titulo) {
-		return livros.stream()
-				.filter(livro -> livro.getTitulo().toUpperCase().contains(titulo.toUpperCase()))
-				.collect(Collectors.toList());
+		List<Livro> allLivros = new ArrayList<>();
+		for(int i = 0; i < livros.size(); i++) {
+			Livro livro = livros.get(i);
+			if(livro.getTitulo().equalsIgnoreCase(titulo)){
+				allLivros.add(livro);
+			}
+		}
+		return allLivros;
 	}
-	
+	//@ skipesc
 	public static List<Livro> findByAutor(String autor) {
-		return livros.stream()
-				.filter(livro -> livro.getAutor().toUpperCase().contains(autor.toUpperCase()))
-				.collect(Collectors.toList());
+		List<Livro> allLivros = new ArrayList<>();
+		for(int i = 0; i < livros.size(); i++) {
+			Livro livro = livros.get(i);
+			if(livro.getAutor().equalsIgnoreCase(autor)){
+				allLivros.add(livro);
+			}
+		}
+		return allLivros;
 	}
-	
+	//@ skipesc
 	public static List<Livro> findByIdioma(String idioma) {
-		return livros.stream()
-				.filter(livro -> livro.getIdioma().toUpperCase().contains(idioma.toUpperCase()))
-				.collect(Collectors.toList());
+		List<Livro> allLivros = new ArrayList<>();
+		for(int i = 0; i < livros.size(); i++) {
+			Livro livro = livros.get(i);
+			if(livro.getIdioma().equalsIgnoreCase(idioma)){
+				allLivros.add(livro);
+			}
+		}
+		return allLivros;
 	}
-
+	//@ skipesc
 	public static List<Livro> findByEditora(String editora) {
-		return livros.stream()
-				.filter(livro -> livro.getEditora().toUpperCase().contains(editora.toUpperCase()))
-				.collect(Collectors.toList());
-	}	
+		List<Livro> allLivros = new ArrayList<>();
+		for(int i = 0; i < livros.size(); i++) {
+			Livro livro = livros.get(i);
+			if(livro.getEditora().equalsIgnoreCase(editora)){
+				allLivros.add(livro);
+			}
+		}
+		return allLivros;
 
+	}
+	//@ skipesc
 	public static List<Livro> findByCategoria(String categoria) {
-		return livros.stream()
-				.filter(livro -> livro.getCategoria().toUpperCase().contains(categoria.toUpperCase()))
-				.collect(Collectors.toList());
+		List<Livro> allLivros = new ArrayList<>();
+		for(int i = 0; i < livros.size(); i++) {
+			Livro livro = livros.get(i);
+			if(livro.getCategoria().equalsIgnoreCase(categoria)){
+				allLivros.add(livro);
+			}
+		}
+		return allLivros;
 	}
 	
 }
