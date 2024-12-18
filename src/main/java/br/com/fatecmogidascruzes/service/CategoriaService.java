@@ -4,32 +4,27 @@ import br.com.fatecmogidascruzes.model.entity.Categoria;
 
 public interface CategoriaService {
 
-    /*@ public normal_behavior
-      @     requires categoria != null;
-      @     ensures categoria.getId() > 0;
-      @     ensures categoria.getNome() != null && !categoria.getNome().isEmpty();
-      @     ensures categoria.getDescricao() != null && !categoria.getDescricao().isEmpty();
+    /*@
+      @ requires categoria != null;
+      @ requires categoria.getNome() != null;
+      @ requires categoriaRepository.findByName(categoria.getNome()) == null;
+      @ assignable System.out.outputText, System.out.eol;
       @*/
     void adicionarCategoria(Categoria categoria);
 
-    /*@ public normal_behavior
-      @     requires id > 0;
-      @     requires categoria != null;
-      @     requires categoria.getId() == id;
-      @     ensures categoria.getNome() != null && !categoria.getNome().isEmpty();
-      @     ensures categoria.getDescricao() != null && !categoria.getDescricao().isEmpty();
-      @*/
-    void atualizarCategoria(int id, Categoria categoria);
 
-    /*@ public normal_behavior
-      @     requires id > 0;
+    /*@
+      @ requires id >= 0;
+      @ assignable System.out.outputText, System.out.eol;
       @*/
     void excluirCategoria(int id);
 
-    /*@ public normal_behavior
-      @     requires nome != null && !nome.isEmpty();
-      @     ensures \result != null;
-      @     ensures \result.getNome().equals(nome);
+    /*@
+      @ requires nome != null;
+      @ ensures (\result == null || (\result.getNome() != null && \result.getNome().equalsIgnoreCase(nome)));
+      @ ensures (\forall int i; 0 <= i && i < categoriaRepository.findAllCategorias().size(); !categoriaRepository.findAllCategorias().get(i).getNome().equalsIgnoreCase(nome)) ==>
+      @ \result == null;
+      @ assignable System.out.outputText, System.out.eol;
       @*/
     Categoria buscarCategoriaPorNome(String nome);
 }

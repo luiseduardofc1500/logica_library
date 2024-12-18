@@ -93,12 +93,6 @@ public class SistemaDeLivraria {
         clienteService.atualizarCliente(1,new Cliente("antony@email.com", "Romulo da silva", "Silvaro%1mulo", "Romulandia", "11988521035", "moedinhas de 1 centavo", LocalDate.now()));
         System.out.println(ClienteRepository.findById(1));
 
-        System.out.println("\n---- ATUALIZAR CATEGORIA ---" );
-        categoriaService.atualizarCategoria(1,new Categoria("Romance de Época" , "Livros de Romance e Fanfics de época."));
-        System.out.println(CategoriaRepository.findAllCategorias());
-        categoriaService.atualizarCategoria(1,new Categoria("Romance" , "Livros de Romance e Fanfics de época."));
-        System.out.println(CategoriaRepository.findAllCategorias());
-
         //******************************************
 
         //TESTES DE BUSCAR ENTIDADES

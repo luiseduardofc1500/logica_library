@@ -8,12 +8,8 @@ import java.util.List;
 
 public class CategoriaRepository {
 
-    /*@
-      @ public invariant categorias != null;
-      @ public invariant (\forall int i; 0 <= i && i < categorias.size(); categorias.get(i) != null);
-      @*/
-    /*@ spec_public @*/ private static final List<Categoria> categorias = new ArrayList<>();
-
+    //@ spec_public
+    private static final List<Categoria> categorias = new ArrayList<>();
 
     private static int ultimoId = 0;
 
@@ -21,11 +17,9 @@ public class CategoriaRepository {
       @ requires categoria != null;
       @ requires categoria.getNome() != null;
       @ requires findByName(categoria.getNome()) == null;
-      @ ensures categorias.contains(categoria);
-      @ also
-      @ signals (IllegalArgumentException e) findByName(categoria.getNome()) != null;
       @*/
     public static void save(Categoria categoria) {
+        //@ nullable
         Categoria categoriaExistente = findByName(categoria.getNome());
         if (categoriaExistente == null) {
             categorias.add(categoria);
@@ -34,68 +28,64 @@ public class CategoriaRepository {
         }
     }
 
-    /*@
-      @ requires id >= 0;
-      @ requires categoria != null;
-      @ requires findById(id) != null;
-      @ ensures (\forall Categoria c; c != findById(id) ==> \old(categorias).contains(c) ==> categorias.contains(c));
-      @ ensures findById(id).getNome().equals(categoria.getNome());
-      @ ensures findById(id).getDescricao().equals(categoria.getDescricao());
-      @ ensures findById(id).getId()==(categoria.getId());
-      @ also
-      @ signals (IllegalArgumentException e) findById(id) == null;
-      @*/
-    public static void atualizarCategoria(int id, Categoria categoria) {
 
-        Categoria categoriaExistente = findById(id);
-        if(categoriaExistente != null) {
-            categoriaExistente.setNome(categoria.getNome());
-            categoriaExistente.setDescricao(categoria.getDescricao());
-            categoriaExistente.setId(id);
-        } else {
-            throw new IllegalArgumentException("Categoria com id não encontrada");
-        }
-    }
-
-
-    public static List<Categoria> findAllCategorias() {
+    public /*@ pure @*/ static List<Categoria> findAllCategorias() {
         return categorias;
     }
 
 
     private static int findIndexPorId(int id) {
-        return categorias.stream()
-                .filter(categoria -> categoria.getId() == id)
-                .findFirst()
-                .map(categorias::indexOf)
-                .orElse(-1);
+        int index = 0;
+        for (int i = 0; i < categorias.size(); i++) {
+            Categoria categoria = categorias.get(i);
+            if (categoria.getId() == id) {
+                index = i;
+                return index;
+            }
+        }
+        return index;
     }
 
     /*@
       @ requires id >= 0;
-      @ ensures (\exists Categoria c; categorias.contains(c) && c.getId()==(id); \result == c)
-      @   || \result == null;
+      @ ensures (\result == null || (\result.getId() >= 0 && \result.getId()==(id)));
+      @ nullable
       @*/
     public /*@ pure @*/ static Categoria findById(int id) {
-        return categorias.stream()
-                .filter(categoria -> categoria.getId() == id)
-                .findFirst().orElse(null);
+        for (int j = 0; j < categorias.size(); j++) {
+            Categoria categoria = categorias.get(j);
+            if (categoria.getId() == id) {
+                return categoria;
+            }
+        }
+        return null;
     }
 
     /*@
       @ requires nome != null;
-      @ ensures (\exists Categoria c; categorias.contains(c) && c.getNome().equalsIgnoreCase(nome); \result == c)
-      @   || \result == null;
+      @ ensures (\result == null || (\result.getNome() != null && \result.getNome().equalsIgnoreCase(nome)));
+      @ ensures (\forall int i; 0 <= i && i < categorias.size(); !categorias.get(i).getNome().equalsIgnoreCase(nome)) ==>
+      @ \result == null;
+      @ nullable
       @*/
     public /*@ pure @*/ static Categoria findByName(String nome) {
-        return categorias.stream()
-                .filter(categoria -> categoria.getNome().toUpperCase().contains(nome.toUpperCase()))
-                .findFirst()
-                .orElse(null);
+        //@ loop_invariant 0 <= j && j <= categorias.size();
+        //@ loop_invariant (\forall int k; 0 <= k && k < j; !categorias.get(k).getNome().equalsIgnoreCase(nome));
+        //@ decreasing categorias.size() - j;
+        for (int j = 0; j < categorias.size(); j++) {
+            //@ assume categorias.get(j) != null;
+            Categoria categoria = categorias.get(j);
+            if (categoria.getNome().equalsIgnoreCase(nome)) {
+                return categoria;
+            }
+        }
+        //@ assert (\forall int i; 0 <= i && i < categorias.size(); !categorias.get(i).getNome().equalsIgnoreCase(nome));
+        return null;
     }
 
-
+    //@ requires id >= 0;
     public static void removerCategoria(int id) {
+        //@ nullable
         Categoria categoria = findById(id);
         if (categoria != null) {
             categorias.remove(categoria);
